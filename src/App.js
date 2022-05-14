@@ -3,6 +3,7 @@ import { createSmartappDebugger, createAssistant } from "@sberdevices/assistant-
 import './App.css';
 import { InputForm } from "./components/InputForm";
 import { Result } from "./components/Result";
+import { check_base, check_number, convert } from "./utils";
 
 
 const initializeAssistant = (getState/*: any*/) => {
@@ -57,8 +58,26 @@ export default class App extends React.Component {
 
     calculate(action) {
         console.log('calculate', action);
-        this.setState({ num2: 10 });  // FIXME: debug
-        // TODO: implement
+        let { num1, base1, base2 } = action;
+        this.setState({ num2: null });
+
+        if (!check_base(base1)) {
+            alert('Ошибка: некорректное основание первой системы счисления');
+            return;
+        }
+        if (!check_base(base2)) {
+            alert('Ошибка: некорректное основание второй системы счисления');
+            return;
+        }
+        base1 = parseInt(base1);
+        base2 = parseInt(base2);
+
+        if (!check_number(num1, base1)) {
+            alert(`Ошибка: некорректное число для системы счисления ${ base1 }`);
+            return;
+        }
+        const new_num2 = convert(num1, base1, base2);
+        this.setState({ num2: new_num2 });
     }
 
     render() {
