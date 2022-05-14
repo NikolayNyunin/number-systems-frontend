@@ -1,6 +1,8 @@
 import React from "react";
 import { createSmartappDebugger, createAssistant } from "@sberdevices/assistant-client";
 import './App.css';
+import { InputForm } from "./components/InputForm";
+import { Result } from "./components/Result";
 
 
 const initializeAssistant = (getState/*: any*/) => {
@@ -19,6 +21,8 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         console.log('constructor');
+
+        this.state = { base1: '10', base2: '2', num1: '0', num2: null };
 
         this.assistant = initializeAssistant(() => this.getStateForAssistant() );
         this.assistant.on("data", (event/*: any*/) => {
@@ -52,14 +56,32 @@ export default class App extends React.Component {
     }
 
     calculate(action) {
-        console.log('calculate');
+        console.log('calculate', action);
+        this.setState({ num2: 10 });  // FIXME: debug
         // TODO: implement
     }
 
     render() {
         console.log('render');
         return (
-            <h1>Test</h1>
+            <main>
+                <InputForm
+                    number = { this.state.num1 }
+                    onNumberChange = {(new_num1) => this.setState({ num1: new_num1 })}
+                    base1 = { this.state.base1 }
+                    onBase1Change = {(new_base1) => this.setState({ base1: new_base1 })}
+                    base2 = { this.state.base2 }
+                    onBase2Change = {(new_base2) => this.setState({ base2: new_base2 })}
+                    onSubmit = {() => this.calculate({
+                        type: "calculate",
+                        num1: this.state.num1,
+                        base1: this.state.base1,
+                        base2: this.state.base2
+                    })}
+                />
+                <br/>
+                <Result result={ this.state.num2 } />
+            </main>
         );
     }
 }
