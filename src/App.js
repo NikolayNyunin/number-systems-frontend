@@ -1,6 +1,6 @@
 import React from "react";
 import { createSmartappDebugger, createAssistant } from "@sberdevices/assistant-client";
-import './App.css';
+import "./App.css";
 import { InputForm } from "./components/InputForm";
 import { Result } from "./components/Result";
 import { check_base, check_number, convert } from "./utils";
