@@ -2,6 +2,7 @@ import React from "react";
 import { createSmartappDebugger, createAssistant } from "@sberdevices/assistant-client";
 import "./App.css";
 import { InputForm } from "./components/InputForm";
+import { Alert } from "./components/Alert";
 import { Result } from "./components/Result";
 import { check_base, check_number, convert } from "./utils";
 
@@ -10,7 +11,7 @@ const initializeAssistant = (getState/*: any*/) => {
     if (process.env.NODE_ENV === "development") {
         return createSmartappDebugger({
             token: process.env.REACT_APP_TOKEN ?? "",
-            initPhrase: `Запусти ${process.env.REACT_APP_SMARTAPP}`,
+            // initPhrase: `Запусти ${process.env.REACT_APP_SMARTAPP}`,
             getState,
         });
     }
@@ -23,7 +24,7 @@ export default class App extends React.Component {
         super(props);
         console.log('constructor');
 
-        this.state = { base1: '10', base2: '2', num1: '0', num2: null };
+        this.state = { base1: '10', base2: '2', num1: '0', num2: null, error: null };
 
         this.assistant = initializeAssistant(() => this.getStateForAssistant() );
         this.assistant.on("data", (event/*: any*/) => {
@@ -59,21 +60,21 @@ export default class App extends React.Component {
     calculate(action) {
         console.log('calculate', action);
         let { num1, base1, base2 } = action;
-        this.setState({ num2: null });
+        this.setState({ num2: null, error: null });
 
         if (!check_base(base1)) {
-            alert('Ошибка: некорректное основание первой системы счисления');
+            this.setState({ error: `Ошибка: некорректное основание СС - ${ base1 }` });
             return;
         }
         if (!check_base(base2)) {
-            alert('Ошибка: некорректное основание второй системы счисления');
+            this.setState({ error: `Ошибка: некорректное основание СС - ${ base2 }` });
             return;
         }
         base1 = parseInt(base1);
         base2 = parseInt(base2);
 
         if (!check_number(num1, base1)) {
-            alert(`Ошибка: некорректное число для системы счисления ${ base1 }`);
+            this.setState({ error: `Ошибка: некорректное число для СС-${ base1 }: ${ num1 }` });
             return;
         }
         const new_num2 = convert(num1, base1, base2);
@@ -86,11 +87,11 @@ export default class App extends React.Component {
             <main>
                 <InputForm
                     number = { this.state.num1 }
-                    onNumberChange = {(new_num1) => this.setState({ num1: new_num1 })}
+                    onNumberChange = {(new_num1) => this.setState({ num1: new_num1, num2: null, error: null })}
                     base1 = { this.state.base1 }
-                    onBase1Change = {(new_base1) => this.setState({ base1: new_base1 })}
+                    onBase1Change = {(new_base1) => this.setState({ base1: new_base1, num2: null, error: null })}
                     base2 = { this.state.base2 }
-                    onBase2Change = {(new_base2) => this.setState({ base2: new_base2 })}
+                    onBase2Change = {(new_base2) => this.setState({ base2: new_base2, num2: null, error: null })}
                     onSubmit = {() => this.calculate({
                         type: "calculate",
                         num1: this.state.num1,
@@ -99,6 +100,7 @@ export default class App extends React.Component {
                     })}
                 />
                 <br/>
+                <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />
             </main>
         );

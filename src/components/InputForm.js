@@ -56,10 +56,10 @@ export const InputForm = (props) => {
                     </SCol>
                 </SRow>
                 <SRow>
-                    <SCol sizeS={2} sizeM={4} sizeL={6} sizeXL={10}>
+                    <SCol sizeS={3} sizeM={4} sizeL={6} sizeXL={10}>
                         <SH1>Первая система счисления:</SH1>
                     </SCol>
-                    <SCol sizeS={2} sizeM={2} sizeL={2} sizeXL={2}>
+                    <SCol sizeS={1} sizeM={2} sizeL={2} sizeXL={2}>
                         {/*TODO: align the text to the center*/}
                         <Input
                             className = "base"
@@ -74,10 +74,10 @@ export const InputForm = (props) => {
                     </SCol>
                 </SRow>
                 <SRow>
-                    <SCol sizeS={2} sizeM={4} sizeL={6} sizeXL={10}>
+                    <SCol sizeS={3} sizeM={4} sizeL={6} sizeXL={10}>
                         <SH1>Вторая система счисления:</SH1>
                     </SCol>
-                    <SCol sizeS={2} sizeM={2} sizeL={2} sizeXL={2}>
+                    <SCol sizeS={1} sizeM={2} sizeL={2} sizeXL={2}>
                         <Input
                             className = "base"
                             type = "number"
