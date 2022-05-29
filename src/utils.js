@@ -89,7 +89,7 @@ const to_decimal = (number, from_base) => {
     if (negative)
         result *= -1;
 
-    return result;
+    return Math.round(result * Math.pow(10, 11)) / Math.pow(10, 11);
 }
 
 
@@ -114,9 +114,13 @@ const from_decimal = (number, to_base) => {
     let whole = Math.trunc(number);
     let fractional = number % 1;
 
-    while (whole > 0) {
-        result = NUMBERS[whole % to_base] + result;
-        whole = Math.trunc(whole / to_base);
+    if (whole === 0)
+        result += '0';
+    else {
+        while (whole > 0) {
+            result = NUMBERS[whole % to_base] + result;
+            whole = Math.trunc(whole / to_base);
+        }
     }
 
     if (fractional > EPS) {
