@@ -11,7 +11,7 @@ const initializeAssistant = (getState/*: any*/) => {
     if (process.env.NODE_ENV === "development") {
         return createSmartappDebugger({
             token: process.env.REACT_APP_TOKEN ?? "",
-            // initPhrase: `Запусти ${process.env.REACT_APP_SMARTAPP}`,
+            initPhrase: `Запусти ${process.env.REACT_APP_SMARTAPP}`,
             getState,
         });
     }
@@ -29,8 +29,8 @@ export default class App extends React.Component {
         this.assistant = initializeAssistant(() => this.getStateForAssistant() );
         this.assistant.on("data", (event/*: any*/) => {
             console.log(`assistant.on(data)`, event);
-            const { action } = event;
-            this.dispatchAssistantAction(action);
+            const { smart_app_data } = event;
+            this.dispatchAssistantData(smart_app_data);
         });
         this.assistant.on("start", (event) => {
             console.log(`assistant.on(start)`, event);
@@ -38,18 +38,16 @@ export default class App extends React.Component {
     }
 
     getStateForAssistant() {
-        console.log('getStateForAssistant: this.state:', this.state);
-        const state = {};  // TODO: generate state
-        console.log('getStateForAssistant: state:', state);
-        return state;
+        console.log('getStateForAssistant: state:', this.state);
+        return this.state;
     }
 
-    dispatchAssistantAction(action) {
-        console.log('dispatchAssistantAction', action);
-        if (action) {
-            switch (action.type) {
+    dispatchAssistantData(data) {
+        console.log('dispatchAssistantData', data);
+        if (data) {
+            switch (data.type) {
                 case 'calculate':
-                    return this.calculate(action);
+                    return this.calculate(data);
 
                 default:
                     throw new Error();
@@ -57,9 +55,9 @@ export default class App extends React.Component {
         }
     }
 
-    calculate(action) {
-        console.log('calculate', action);
-        let { num1, base1, base2 } = action;
+    calculate(data) {
+        console.log('calculate', data);
+        let { num1, base1, base2 } = data;
         this.setState({ num2: null, error: null });
 
         if (!check_base(base1)) {
@@ -70,6 +68,10 @@ export default class App extends React.Component {
             this.setState({ error: `Ошибка: некорректное основание СС - ${ base2 }` });
             return;
         }
+        if (base1 !== this.state.base1)
+            this.setState({ base1: base1 });
+        if (base2 !== this.state.base2)
+            this.setState({ base2: base2 });
         base1 = parseInt(base1);
         base2 = parseInt(base2);
 
@@ -77,6 +79,9 @@ export default class App extends React.Component {
             this.setState({ error: `Ошибка: некорректное число для СС-${ base1 }: ${ num1 }` });
             return;
         }
+        if (num1 !== this.state.num1)
+            this.setState({ num1: num1 });
+
         const new_num2 = convert(num1, base1, base2);
         this.setState({ num2: new_num2 });
     }
