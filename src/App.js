@@ -47,12 +47,18 @@ export default class App extends React.Component {
         if (data) {
             switch (data.type) {
                 case 'calculate':
-                    return this.calculate(data);
+                    if (this.calculate(data))
+                        return this.sendAction('success');
+                    return this.sendAction('error');
 
                 default:
                     throw new Error();
             }
         }
+    }
+
+    sendAction(action) {
+        this.assistant.sendData({ action: { action_id: action } });
     }
 
     calculate(data) {
@@ -62,11 +68,11 @@ export default class App extends React.Component {
 
         if (!check_base(base1)) {
             this.setState({ error: `Ошибка: некорректное основание СС - ${ base1 }` });
-            return;
+            return false;
         }
         if (!check_base(base2)) {
             this.setState({ error: `Ошибка: некорректное основание СС - ${ base2 }` });
-            return;
+            return false;
         }
         if (base1 !== this.state.base1)
             this.setState({ base1: base1 });
@@ -77,13 +83,14 @@ export default class App extends React.Component {
 
         if (!check_number(num1, base1)) {
             this.setState({ error: `Ошибка: некорректное число для СС-${ base1 }: ${ num1 }` });
-            return;
+            return false;
         }
         if (num1 !== this.state.num1)
             this.setState({ num1: num1 });
 
         const new_num2 = convert(num1, base1, base2);
         this.setState({ num2: new_num2 });
+        return true;
     }
 
     render() {
