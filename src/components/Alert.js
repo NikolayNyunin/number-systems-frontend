@@ -7,7 +7,7 @@ import styled from "styled-components";
 const TextAlert = styled(DsplS)`
     color: ${colorValues.critical};
     text-align: center;
-    padding: 20px;
+    padding: 35px 20px 20px;
 `;
 
 

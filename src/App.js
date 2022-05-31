@@ -104,7 +104,6 @@ export default class App extends React.Component {
                         base2: this.state.base2
                     })}
                 />
-                <br/>
                 <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />
             </main>

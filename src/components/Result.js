@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const SContainer = styled(Container)`
     text-align: center;
-    padding: 20px;
+    padding: 35px 20px 20px;
 `;
 const SDsplM = styled(DsplM)`
     margin-top: 20px;
