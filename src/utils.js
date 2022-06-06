@@ -80,7 +80,7 @@ const to_decimal = (number, from_base) => {
 
     if (dot_index !== number.length) {
         for (let i = 1; i < number.length - dot_index; i++) {
-            let n = number[dot_index + 1];
+            let n = number[dot_index + i];
             n = NUMBERS.indexOf(n.toUpperCase());
             result += n * Math.pow(from_base, -i);
         }
