@@ -5,6 +5,12 @@ import { InputForm } from "./components/InputForm";
 import { Alert } from "./components/Alert";
 import { Result } from "./components/Result";
 import { check_base, check_number, convert } from "./utils";
+import styled from "styled-components";
+
+
+const Main = styled.main`
+    padding-bottom: 150px;  // TODO: adjust the padding
+`;
 
 
 const initializeAssistant = (getState/*: any*/) => {
@@ -96,7 +102,7 @@ export default class App extends React.Component {
     render() {
         console.log('render');
         return (
-            <main>
+            <Main>
                 <InputForm
                     number = { this.state.num1 }
                     onNumberChange = {(new_num1) => this.setState({ num1: new_num1, num2: null, error: null })}
@@ -113,7 +119,7 @@ export default class App extends React.Component {
                 />
                 <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />
-            </main>
+            </Main>
         );
     }
 }
