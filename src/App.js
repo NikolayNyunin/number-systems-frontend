@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 
 const Main = styled.main`
-    padding-bottom: 150px;  // TODO: adjust the padding
+    padding-bottom: 200px;
 `;
 
 
