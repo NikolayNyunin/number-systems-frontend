@@ -57,6 +57,9 @@ export default class App extends React.Component {
                         return this.sendAction('success');
                     return this.sendAction('error');
 
+                case 'reset':
+                    return this.setState({ base1: '10', base2: '2', num1: '0', num2: null, error: null });
+
                 default:
                     throw new Error();
             }
@@ -116,6 +119,7 @@ export default class App extends React.Component {
                         base1: this.state.base1,
                         base2: this.state.base2
                     })}
+                    onReset = {() => this.setState({ base1: '10', base2: '2', num1: '0', num2: null, error: null })}
                 />
                 <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />

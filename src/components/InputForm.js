@@ -21,7 +21,7 @@ const Input = styled(TextField)`
     margin: auto;
     width: 100%;
 `;
-const Submit = styled(Button)`
+const SButton = styled(Button)`
     font-size: 2rem;
     font-weight: normal;
     height: 3rem;
@@ -30,7 +30,7 @@ const Submit = styled(Button)`
 
 
 export const InputForm = (props) => {
-    const { number, base1, base2, onNumberChange, onBase1Change, onBase2Change, onSubmit } = props;
+    const { number, base1, base2, onNumberChange, onBase1Change, onBase2Change, onSubmit, onReset } = props;
 
     return (
         <SContainer>
@@ -60,7 +60,6 @@ export const InputForm = (props) => {
                         <SH1>Первая система счисления:</SH1>
                     </SCol>
                     <SCol sizeS={1} sizeM={2} sizeL={2} sizeXL={2}>
-                        {/*TODO: align the text to the center*/}
                         <Input
                             className = "base"
                             type = "number"
@@ -92,9 +91,16 @@ export const InputForm = (props) => {
                 </SRow>
                 <SRow>
                     <SCol sizeS={4} offsetS={0} sizeM={4} offsetM={1} sizeL={4} offsetL={2} sizeXL={6} offsetXL={3}>
-                        <Submit type="submit" stretch >
+                        <SButton type="submit" stretch >
                             Перевести
-                        </Submit>
+                        </SButton>
+                    </SCol>
+                </SRow>
+                <SRow>
+                    <SCol sizeS={4} offsetS={0} sizeM={4} offsetM={1} sizeL={4} offsetL={2} sizeXL={6} offsetXL={3}>
+                        <SButton type="button" stretch onClick={() => onReset()} >
+                            Сбросить
+                        </SButton>
                     </SCol>
                 </SRow>
             </form>
