@@ -11,6 +11,7 @@ const SRow = styled(Row)`
 `;
 const SCol = styled(Col)`
     display: flex;
+    justify-content: safe center;
 `;
 const SH1 = styled(H1)`
     margin: auto;
@@ -20,6 +21,9 @@ const Input = styled(TextField)`
     font-size: 2rem;
     margin: auto;
     width: 100%;
+`;
+const Number = styled(Input)`
+    min-width: 4.5rem;
 `;
 const SButton = styled(Button)`
     font-size: 2rem;
@@ -60,7 +64,7 @@ export const InputForm = (props) => {
                         <SH1>Первая система счисления:</SH1>
                     </SCol>
                     <SCol sizeS={1} sizeM={2} sizeL={2} sizeXL={2}>
-                        <Input
+                        <Number
                             className = "base"
                             type = "number"
                             size = "m"
@@ -77,7 +81,7 @@ export const InputForm = (props) => {
                         <SH1>Вторая система счисления:</SH1>
                     </SCol>
                     <SCol sizeS={1} sizeM={2} sizeL={2} sizeXL={2}>
-                        <Input
+                        <Number
                             className = "base"
                             type = "number"
                             size = "m"

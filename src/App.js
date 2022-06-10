@@ -8,6 +8,7 @@ import { check_base, check_number, convert } from "./utils";
 import styled from "styled-components";
 
 
+// TODO: check insets
 const Main = styled.main`
     padding-bottom: 200px;
 `;
@@ -32,7 +33,7 @@ export default class App extends React.Component {
 
         this.state = { base1: '10', base2: '2', num1: '0', num2: null, error: null };
 
-        this.assistant = initializeAssistant(() => this.getStateForAssistant() );
+        this.assistant = initializeAssistant(() => this.getStateForAssistant());
         this.assistant.on("data", (event/*: any*/) => {
             console.log(`assistant.on(data)`, event);
             const { smart_app_data } = event;
