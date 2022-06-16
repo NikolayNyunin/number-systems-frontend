@@ -9,8 +9,8 @@ import styled from "styled-components";
 
 
 // TODO: check insets
-const Main = styled.main`
-    padding-bottom: 200px;
+const Bottom = styled.div`
+    margin-top: 200px;
 `;
 
 
@@ -77,6 +77,16 @@ export default class App extends React.Component {
         this.assistant.sendData({ action: { action_id: action } });
     }
 
+    scrollToBottom() {
+        this.bottom.scrollIntoView({ behavior: "smooth" });
+        console.log('scrolling to the bottom');
+    }
+
+    scrollToTop() {
+        window.scroll(0, 0);
+        console.log('scrolling to the top');
+    }
+
     calculate(data) {
         console.log('calculate', data);
         let { num1, base1, base2 } = data;
@@ -109,10 +119,17 @@ export default class App extends React.Component {
         return true;
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.num2 !== null || this.state.error !== null)
+            this.scrollToBottom();
+        else if (prevState.num2 !== null || prevState.error !== null)
+            this.scrollToTop();
+    }
+
     render() {
         console.log('render');
         return (
-            <Main>
+            <main>
                 <InputForm
                     number = { this.state.num1 }
                     onNumberChange = {(new_num1) => this.setState({ num1: new_num1, num2: null, error: null })}
@@ -131,7 +148,8 @@ export default class App extends React.Component {
                 />
                 <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />
-            </Main>
+                <Bottom ref={(el) => this.bottom = el} ></Bottom>
+            </main>
         );
     }
 }
