@@ -34,7 +34,7 @@ const SButton = styled(Button)`
 
 
 export const InputForm = (props) => {
-    const { number, base1, base2, onNumberChange, onBase1Change, onBase2Change, onSubmit, onReset } = props;
+    const { number, base1, base2, onNumberChange, onBase1Change, onBase2Change, onSubmit, onReset, joy } = props;
 
     return (
         <SContainer>
@@ -45,7 +45,7 @@ export const InputForm = (props) => {
             }}>
                 <SRow>
                     <SCol sizeS={2} sizeM={3} sizeL={4} sizeXL={6}>
-                        <SH1>Введите число:</SH1>
+                        <SH1>{ joy ? 'Введи число:' : 'Введите число:' }</SH1>
                     </SCol>
                     <SCol sizeS={2} sizeM={3} sizeL={4} sizeXL={6}>
                         <Input

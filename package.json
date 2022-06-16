@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@salutejs/client": "^1.2.1",
     "@salutejs/plasma-icons": "^1.84.0",
     "@salutejs/plasma-tokens": "^1.18.1",
     "@salutejs/plasma-ui": "^1.106.0",
-    "@sberdevices/assistant-client": "^5.0.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",

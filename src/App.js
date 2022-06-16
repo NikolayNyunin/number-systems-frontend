@@ -1,5 +1,5 @@
 import React from "react";
-import { createSmartappDebugger, createAssistant } from "@sberdevices/assistant-client";
+import { createSmartappDebugger, createAssistant } from "@salutejs/client";
 import "./App.css";
 import { InputForm } from "./components/InputForm";
 import { Alert } from "./components/Alert";
@@ -31,13 +31,19 @@ export default class App extends React.Component {
         super(props);
         console.log('constructor');
 
-        this.state = { base1: '10', base2: '2', num1: '0', num2: null, error: null };
+        this.state = { base1: '10', base2: '2', num1: '0', num2: null, error: null, joy: false };
 
         this.assistant = initializeAssistant(() => this.getStateForAssistant());
         this.assistant.on("data", (event/*: any*/) => {
             console.log(`assistant.on(data)`, event);
-            const { smart_app_data } = event;
-            this.dispatchAssistantData(smart_app_data);
+            if (event.type === 'character') {
+                const joy = (event.character.id === 'joy');
+                this.setState({ joy: joy });
+            }
+            else if (event.type === 'smart_app_data') {
+                const { smart_app_data } = event;
+                this.dispatchAssistantData(smart_app_data);
+            }
         });
         this.assistant.on("start", (event) => {
             console.log(`assistant.on(start)`, event);
@@ -121,6 +127,7 @@ export default class App extends React.Component {
                         base2: this.state.base2
                     })}
                     onReset = {() => this.setState({ base1: '10', base2: '2', num1: '0', num2: null, error: null })}
+                    joy = { this.state.joy }
                 />
                 <Alert text={ this.state.error } />
                 <Result result={ this.state.num2 } />
