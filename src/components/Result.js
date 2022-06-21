@@ -9,6 +9,7 @@ const SContainer = styled(Container)`
 `;
 const SDsplM = styled(DsplM)`
     margin-top: 20px;
+    word-break: break-word;
 `;
 
 
